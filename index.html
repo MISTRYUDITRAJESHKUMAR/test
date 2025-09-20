@@ -47,6 +47,26 @@
             bottom: -200px;
             right: -200px;
         }
+        /* Added hover effects for feature cards */
+        .feature-card {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        /* Styles for the image slider */
+        .slide {
+            transition: filter 0.5s ease, transform 0.5s ease, opacity 0.5s ease;
+            transform: scale(0.85);
+            filter: blur(4px);
+            opacity: 0.5;
+        }
+        .slide.active {
+            transform: scale(1);
+            filter: blur(0px);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -64,6 +84,7 @@
             <a href="#features" class="text-gray-600 hover:text-orange-500 transition-colors">Features</a>
             <a href="#ingredients" class="text-gray-600 hover:text-orange-500 transition-colors">Ingredients</a>
             <a href="#reviews" class="text-gray-600 hover:text-orange-500 transition-colors">Reviews</a>
+            <a href="#gallery" class="text-gray-600 hover:text-orange-500 transition-colors">Gallery</a>
         </nav>
         <button class="px-6 py-2 bg-orange-500 text-white font-semibold rounded-full shadow-lg hover:bg-orange-600 transition-transform transform hover:scale-105 cta-button">Order Now</button>
     </header>
@@ -90,9 +111,9 @@
             <!-- Image Content -->
             <div class="relative flex items-center justify-center hero-image-container">
                 <!-- Decorative background elements for the image -->
-                <div class="absolute w-72 h-72 bg-yellow-200/50 rounded-full -translate-x-10 -translate-y-10"></div>
-                <div class="absolute w-80 h-80 bg-orange-200/50 rounded-full translate-x-10 translate-y-10 bottom-0 right-0"></div>
-                <img src="https://placehold.co/500x500/FFF5E1/FF8C00?text=Your+Product" alt="Delicious Food Product" class="relative z-10 w-full max-w-sm md:max-w-md rounded-full shadow-2xl product-image">
+                <div class="absolute w-72 h-72 bg-yellow-200/50 rounded-full -translate-x-10 -translate-y-10 hero-deco-1"></div>
+                <div class="absolute w-80 h-80 bg-orange-200/50 rounded-full translate-x-10 translate-y-10 bottom-0 right-0 hero-deco-2"></div>
+                <img src="https://placehold.co/500x500/f8b400/333333?text=Delicious+Dabeli" alt="Delicious Food Product" class="relative z-10 w-full max-w-sm md:max-w-md rounded-full shadow-2xl product-image">
             </div>
         </div>
     </section>
@@ -137,7 +158,7 @@
     <section id="ingredients" class="content-section py-20 px-4 flex items-center">
         <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div class="ingredients-image-container">
-                <img src="https://placehold.co/600x400/FFF5E1/FF8C00?text=Fresh+Ingredients" alt="Fresh Ingredients" class="rounded-2xl shadow-xl w-full">
+                <img src="https://placehold.co/600x400/f8b400/333333?text=Authentic+Street+Food" alt="Fresh Ingredients" class="rounded-2xl shadow-xl w-full">
             </div>
             <div class="ingredients-text">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-800">Only The Best Goes In</h2>
@@ -177,6 +198,48 @@
             </div>
         </div>
     </section>
+    
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 px-4 overflow-hidden">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 section-title">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800">A Feast For Your Eyes</h2>
+                <p class="mt-4 text-lg text-gray-500">Discover the beauty of our craft.</p>
+            </div>
+            
+            <div id="slider" class="relative w-full flex items-center justify-center">
+                 <!-- Slider Container -->
+                <div class="w-full h-[400px] relative overflow-hidden">
+                    <!-- Slide Track -->
+                    <div class="slider-track absolute top-0 left-0 h-full flex items-center">
+                        <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px] mx-4">
+                            <img src="https://placehold.co/400x500/f8b400/333333?text=Freshly+Made" alt="Gallery Image 1" class="w-full h-full object-cover rounded-2xl shadow-lg">
+                        </div>
+                        <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px] mx-4">
+                            <img src="https://placehold.co/400x500/f8b400/333333?text=Topped+with+Love" alt="Gallery Image 2" class="w-full h-full object-cover rounded-2xl shadow-lg">
+                        </div>
+                        <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px] mx-4">
+                            <img src="https://placehold.co/400x500/f8b400/333333?text=Perfectly+Spiced" alt="Gallery Image 3" class="w-full h-full object-cover rounded-2xl shadow-lg">
+                        </div>
+                        <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px] mx-4">
+                            <img src="https://placehold.co/400x500/f8b400/333333?text=Hot+and+Ready" alt="Gallery Image 4" class="w-full h-full object-cover rounded-2xl shadow-lg">
+                        </div>
+                         <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px] mx-4">
+                            <img src="https://placehold.co/400x500/f8b400/333333?text=Pure+Joy" alt="Gallery Image 5" class="w-full h-full object-cover rounded-2xl shadow-lg">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <button id="prev-btn" class="absolute left-0 md:-left-8 top-1/2 -translate-y-1/2 bg-white/50 backdrop-blur-sm rounded-full p-3 shadow-lg z-10 hover:bg-white transition">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                 <button id="next-btn" class="absolute right-0 md:-right-8 top-1/2 -translate-y-1/2 bg-white/50 backdrop-blur-sm rounded-full p-3 shadow-lg z-10 hover:bg-white transition">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-16 px-4">
@@ -195,21 +258,19 @@
     <!-- GSAP (GreenSock Animation Platform) for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            gsap.registerPlugin(ScrollTrigger);
+            gsap.registerPlugin(ScrollTrigger, Draggable);
 
             // --- Initial Page Load Animations ---
             const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-            // Animate header elements
             timeline.from('.logo', { y: -30, opacity: 0, duration: 0.8, delay: 0.2 })
                 .from('.nav-links a', { y: -30, opacity: 0, duration: 0.5, stagger: 0.1 }, "-=0.5")
                 .from('.cta-button', { y: -30, opacity: 0, duration: 0.5 }, "-=0.5");
 
-            // Animate Hero Section Text
-            // A simple text split for animation effect
             document.querySelectorAll('.split-text').forEach((span, i) => {
                 timeline.from(span, { y: 50, opacity: 0, duration: 0.8 }, 0.5 + i * 0.1);
             });
@@ -217,100 +278,111 @@
             timeline.from('.hero-subtitle', { y: 20, opacity: 0, duration: 0.8 }, "-=0.8")
                 .from('.hero-cta-group', { y: 20, opacity: 0, duration: 0.8 }, "-=0.6");
             
-            // Animate Hero Section Image
-            timeline.from('.hero-image-container div', { scale: 0, opacity: 0, stagger: 0.2, duration: 1 }, "-=1")
+            timeline.from('.hero-deco-1, .hero-deco-2', { scale: 0, opacity: 0, stagger: 0.2, duration: 1 }, "-=1")
                 .from('.product-image', { scale: 0.5, opacity: 0, rotation: 15, duration: 1.2, ease: 'elastic.out(1, 0.5)' }, "-=0.8");
 
+            gsap.to('.product-image', {
+                y: 20,
+                duration: 2.5,
+                ease: 'sine.inOut',
+                repeat: -1,
+                yoyo: true,
+                delay: 1.5
+            });
+
             // --- Scroll-Triggered Animations ---
-
-            // Animate Blob backgrounds on scroll
             gsap.to('.blob-1', {
-                scrollTrigger: {
-                    trigger: 'body',
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    scrub: 1,
-                },
-                x: '30vw',
-                y: '50vh',
-                scale: 1.5,
-                rotation: 360,
-                ease: 'none'
+                scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 1.5 },
+                x: '30vw', y: '50vh', scale: 1.5, rotation: 360, ease: 'none'
             });
-             gsap.to('.blob-2', {
-                scrollTrigger: {
-                    trigger: 'body',
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    scrub: 1,
-                },
-                x: '-40vw',
-                y: '-40vh',
-                scale: 1.2,
-                rotation: -360,
-                ease: 'none'
+            gsap.to('.blob-2', {
+                scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 1.5 },
+                x: '-40vw', y: '-40vh', scale: 1.2, rotation: -360, ease: 'none'
             });
 
-            // Animate Section Titles
             gsap.utils.toArray('.section-title').forEach(title => {
-                gsap.from(title, {
-                    scrollTrigger: {
-                        trigger: title,
-                        start: 'top 85%',
-                        toggleActions: 'play none none none'
-                    },
-                    y: 50,
-                    opacity: 0,
-                    duration: 1
+                gsap.from(title.children, {
+                    scrollTrigger: { trigger: title, start: 'top 85%' },
+                    y: 50, opacity: 0, duration: 0.8, stagger: 0.2
                 });
             });
 
-            // Animate Feature Cards
             gsap.from('.feature-card', {
-                scrollTrigger: {
-                    trigger: '#features',
-                    start: 'top 70%',
-                    toggleActions: 'play none none none',
-                },
-                y: 100,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: 'power3.out'
+                scrollTrigger: { trigger: '#features', start: 'top 70%' },
+                y: 100, opacity: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out'
             });
 
-            // Animate Ingredients Section
-            const ingredientsTL = gsap.timeline({
-                scrollTrigger: {
-                    trigger: '#ingredients',
-                    start: 'top 60%'
-                }
-            });
+            const ingredientsTL = gsap.timeline({ scrollTrigger: { trigger: '#ingredients', start: 'top 60%' } });
             ingredientsTL.from('.ingredients-image-container', { x: -100, opacity: 0, duration: 1, ease: 'power3.out' })
-                         .from('.ingredients-text > *', { x: 100, opacity: 0, duration: 0.8, stagger: 0.2 }, "-=0.5");
+                         .from('.ingredients-text h2, .ingredients-text p', { x: 100, opacity: 0, duration: 0.8, stagger: 0.2 }, "-=0.5")
+                         .from('.ingredient-item', { x: 50, opacity: 0, stagger: 0.15, duration: 0.5 }, '-=0.5');
             
-            // Animate Reviews Section
             gsap.from('.review-card', {
-                scrollTrigger: {
-                    trigger: '#reviews',
-                    start: 'top 70%',
-                },
-                scale: 0.8,
-                opacity: 0,
-                duration: 1.2,
-                ease: 'elastic.out(1, 0.75)'
+                scrollTrigger: { trigger: '#reviews', start: 'top 70%' },
+                scale: 0.8, opacity: 0, duration: 1.2, ease: 'elastic.out(1, 0.75)'
             });
+
+            // --- Gallery Slider Logic ---
+            const slider = document.getElementById('slider');
+            const track = slider.querySelector('.slider-track');
+            const slides = Array.from(track.children);
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+
+            if (slides.length > 0) {
+                // Use a slight delay to ensure images are loaded and dimensions are correct
+                setTimeout(() => {
+                    let currentIndex = 0;
+                    const slideWidth = slides[0].offsetWidth;
+                    const slideMargin = parseInt(window.getComputedStyle(slides[0]).marginRight) * 2; // accounts for mx-4
+                    const totalSlideWidth = slideWidth + slideMargin;
+                    
+                    const initialOffset = (slider.offsetWidth / 2) - (totalSlideWidth / 2);
+                    gsap.set(track, { x: initialOffset });
+
+                    function updateSlides(activeIndex) {
+                        slides.forEach((slide, index) => {
+                            if (index === activeIndex) {
+                                slide.classList.add('active');
+                            } else {
+                                slide.classList.remove('active');
+                            }
+                        });
+                    }
+
+                    function goToSlide(index) {
+                        if (index < 0) index = slides.length - 1;
+                        if (index >= slides.length) index = 0;
+
+                        const targetX = initialOffset - (index * totalSlideWidth);
+
+                        gsap.to(track, {
+                            x: targetX,
+                            duration: 0.8,
+                            ease: 'power3.inOut'
+                        });
+
+                        currentIndex = index;
+                        updateSlides(currentIndex);
+                    }
+
+                    nextBtn.addEventListener('click', () => {
+                        goToSlide(currentIndex + 1);
+                    });
+
+                    prevBtn.addEventListener('click', () => {
+                        goToSlide(currentIndex - 1);
+                    });
+                    
+                    updateSlides(currentIndex);
+                }, 100); // 100ms delay
+            }
+
 
             // Animate Footer
              gsap.from('footer > div > *', {
-                scrollTrigger: {
-                    trigger: 'footer',
-                    start: 'top 90%',
-                },
-                y: 50,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.2
+                scrollTrigger: { trigger: 'footer', start: 'top 90%' },
+                y: 50, opacity: 0, duration: 0.8, stagger: 0.2
             });
 
         });
@@ -318,3 +390,4 @@
 
 </body>
 </html>
+
