@@ -55,17 +55,31 @@
             transform: translateY(-12px) scale(1.03);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
         }
-        /* Styles for the image slider */
+        /* Styles for the 3D image slider */
+        #slider {
+            perspective: 1500px; /* Creates the 3D viewport */
+        }
+        .slider-track {
+            transform-style: preserve-3d; /* Allows children to be transformed in 3D */
+            position: relative;
+            width: 300px; /* Width of a single slide */
+            height: 400px; /* Height of a single slide */
+            margin: auto;
+        }
         .slide {
-            transition: filter 0.5s ease, transform 0.5s ease, opacity 0.5s ease;
-            transform: scale(0.85);
-            filter: blur(4px);
-            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: filter 0.8s ease, opacity 0.8s ease;
+            backface-visibility: hidden; /* Improves rendering performance */
         }
         .slide.active {
-            transform: scale(1);
             filter: blur(0px);
             opacity: 1;
+        }
+        .slide:not(.active) {
+            filter: blur(4px);
+            opacity: 0.6;
         }
     </style>
 </head>
@@ -207,26 +221,23 @@
                 <p class="mt-4 text-lg text-gray-500">Discover the beauty of our craft.</p>
             </div>
             
-            <div id="slider" class="relative w-full flex items-center justify-center">
-                 <!-- Slider Container -->
-                <div class="w-full h-[400px] relative overflow-hidden">
-                    <!-- Slide Track -->
-                    <div class="slider-track absolute top-0 left-0 h-full flex items-center">
-                        <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px] mx-4">
-                            <img src="https://placehold.co/400x500/f8b400/333333?text=Freshly+Made" alt="Gallery Image 1" class="w-full h-full object-cover rounded-2xl shadow-lg">
-                        </div>
-                        <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px] mx-4">
-                            <img src="https://placehold.co/400x500/f8b400/333333?text=Topped+with+Love" alt="Gallery Image 2" class="w-full h-full object-cover rounded-2xl shadow-lg">
-                        </div>
-                        <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px] mx-4">
-                            <img src="https://placehold.co/400x500/f8b400/333333?text=Perfectly+Spiced" alt="Gallery Image 3" class="w-full h-full object-cover rounded-2xl shadow-lg">
-                        </div>
-                        <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px] mx-4">
-                            <img src="https://placehold.co/400x500/f8b400/333333?text=Hot+and+Ready" alt="Gallery Image 4" class="w-full h-full object-cover rounded-2xl shadow-lg">
-                        </div>
-                         <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px] mx-4">
-                            <img src="https://placehold.co/400x500/f8b400/333333?text=Pure+Joy" alt="Gallery Image 5" class="w-full h-full object-cover rounded-2xl shadow-lg">
-                        </div>
+            <div id="slider" class="relative w-full h-[400px] flex items-center justify-center">
+                <!-- Slide Track - acts as the carousel -->
+                <div class="slider-track">
+                    <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px]">
+                        <img src="https://placehold.co/400x500/f8b400/333333?text=Freshly+Made" alt="Gallery Image 1" class="w-full h-full object-cover rounded-2xl shadow-lg">
+                    </div>
+                    <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px]">
+                        <img src="https://placehold.co/400x500/f8b400/333333?text=Topped+with+Love" alt="Gallery Image 2" class="w-full h-full object-cover rounded-2xl shadow-lg">
+                    </div>
+                    <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px]">
+                        <img src="https://placehold.co/400x500/f8b400/333333?text=Perfectly+Spiced" alt="Gallery Image 3" class="w-full h-full object-cover rounded-2xl shadow-lg">
+                    </div>
+                    <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px]">
+                        <img src="https://placehold.co/400x500/f8b400/333333?text=Hot+and+Ready" alt="Gallery Image 4" class="w-full h-full object-cover rounded-2xl shadow-lg">
+                    </div>
+                    <div class="slide h-[350px] w-[250px] md:h-[400px] md:w-[300px]">
+                        <img src="https://placehold.co/400x500/f8b400/333333?text=Pure+Joy" alt="Gallery Image 5" class="w-full h-full object-cover rounded-2xl shadow-lg">
                     </div>
                 </div>
 
@@ -322,27 +333,35 @@
                 scale: 0.8, opacity: 0, duration: 1.2, ease: 'elastic.out(1, 0.75)'
             });
 
-            // --- Gallery Slider Logic ---
-            const slider = document.getElementById('slider');
-            const track = slider.querySelector('.slider-track');
+            // --- 3D Gallery Slider Logic ---
+            const track = document.querySelector('.slider-track');
             const slides = Array.from(track.children);
             const nextBtn = document.getElementById('next-btn');
             const prevBtn = document.getElementById('prev-btn');
 
             if (slides.length > 0) {
+                const slideCount = slides.length;
+                const angle = 360 / slideCount;
+                let currentIndex = 0;
+                
                 // Use a slight delay to ensure images are loaded and dimensions are correct
                 setTimeout(() => {
-                    let currentIndex = 0;
                     const slideWidth = slides[0].offsetWidth;
-                    const slideMargin = parseInt(window.getComputedStyle(slides[0]).marginRight) * 2; // accounts for mx-4
-                    const totalSlideWidth = slideWidth + slideMargin;
-                    
-                    const initialOffset = (slider.offsetWidth / 2) - (totalSlideWidth / 2);
-                    gsap.set(track, { x: initialOffset });
+                    // Calculate the radius of the carousel
+                    const radius = Math.round((slideWidth / 2) / Math.tan(Math.PI / slideCount));
 
-                    function updateSlides(activeIndex) {
-                        slides.forEach((slide, index) => {
-                            if (index === activeIndex) {
+                    // Position slides in a 3D circle
+                    slides.forEach((slide, i) => {
+                        gsap.set(slide, {
+                            rotationY: i * angle,
+                            transformOrigin: `50% 50% ${-radius}px`
+                        });
+                    });
+
+                    function updateClasses() {
+                        const activeIndex = ((currentIndex % slideCount) + slideCount) % slideCount;
+                        slides.forEach((slide, i) => {
+                             if (i === activeIndex) {
                                 slide.classList.add('active');
                             } else {
                                 slide.classList.remove('active');
@@ -350,34 +369,31 @@
                         });
                     }
 
-                    function goToSlide(index) {
-                        if (index < 0) index = slides.length - 1;
-                        if (index >= slides.length) index = 0;
-
-                        const targetX = initialOffset - (index * totalSlideWidth);
-
+                    function rotateCarousel() {
+                        const rotation = currentIndex * -angle;
                         gsap.to(track, {
-                            x: targetX,
-                            duration: 0.8,
+                            rotationY: rotation,
+                            duration: 1.0,
                             ease: 'power3.inOut'
                         });
-
-                        currentIndex = index;
-                        updateSlides(currentIndex);
+                        updateClasses();
                     }
-
+                    
                     nextBtn.addEventListener('click', () => {
-                        goToSlide(currentIndex + 1);
+                        currentIndex++;
+                        rotateCarousel();
                     });
 
                     prevBtn.addEventListener('click', () => {
-                        goToSlide(currentIndex - 1);
+                        currentIndex--;
+                        rotateCarousel();
                     });
-                    
-                    updateSlides(currentIndex);
-                }, 100); // 100ms delay
-            }
 
+                    // Initial setup
+                    updateClasses();
+
+                }, 100);
+            }
 
             // Animate Footer
              gsap.from('footer > div > *', {
